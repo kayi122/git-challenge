@@ -1,5 +1,5 @@
 # GIT ADVANCED EXERCISES
-## Part 1:RFINING HISTORY FIT:
+## Part 1:REFINING HISTORY FIT:
 ### 1.Missing File Fix:
 
 ```bash
@@ -291,4 +291,242 @@ fdf1699 (HEAD -> main) Implemented test 5
 730c39e adding readme
 
 ```
+#  PART 2.BRANCHING BASICS
+## 1.Feature Branch Creation:
+``` bash
+# SOLUTION
+Imagine working on a new feature named ft/new-feature. Let's establish a dedicated branch for it.
+Challenge: Create a new branch named ft/new-feature and switch to that branch.
+
+git branch ft/new-feature
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git checkout ft/new-feature
+M       README.md
+Switched to branch 'ft/new-feature'
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-feature)
+$ git branch
+  ft/branch
+* ft/new-feature
+```
+# 2. Working on the Feature Branch:
+```bash
+# SOLUTION
+Create a new file named feature.txt in this branch and add some content to it.
+Commit these changes with a descriptive message like "Implemented core functionality for new feature".
+ 
+ /branch
+* ft/new-feature
+  main
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-feature)
+$ echo "This is the core functionality for the new feature." > feature.txt
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-feature)
+$ git add feature.txt
+warning: in the working copy of 'feature.txt', LF will be replaced by CRLF the next time Git touches it
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-feature)
+$ git commit -m "Implemented core functionality for new feature"
+[ft/new-feature 59c84bd] Implemented core functionality for new feature
+ 1 file changed, 1 insertion(+)
+ create mode 100644 feature.txt
+```
+# 3.Switching Back and Making More Changes:
+``` bash
+# SOLUTION
+It's common to switch between branches during development.
+Challenge: Switch back to the main branch (previously master) and create a new file named readme.txt with some introductory content. Commit these changes with a message like "Updated project readme".
+
+ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ echo "This is the project readme file." > readme.txt
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git add readme.txt
+warning: in the working copy of 'readme.txt', LF will be replaced by CRLF the next time Git touches it
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git commit -m "Updated project readme"
+[main 88bd461] Updated project readme
+ 1 file changed, 1 insertion(+)
+ create mode 100644 readme.txt
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git log --oneline
+88bd461 (HEAD -> main) Updated project readme
+38689ff (origin/main) adding final readme
+c025119 Merge branch 'main' of https://github.com/kayi122/git-challenge
+fc51a15 adding README.md
+fdf1699 Implemented test 5
+0770335 chore: Create initial and second file
+60114c9 creating third and fourth file
+e476f89 Added test4.md
+3c2f9b9 chore: Create another file
+e7eba3f chore: Create initial file
+730c39e adding readme
+
+```
+# 4.Local vs. Remote Branches:
+``` bash
+# SOLUTION
+So far, we've been working with local branches that exist on your machine. Research the concept of remote branches, which are copies of your local branches stored on a Git hosting platform like GitHub. Learn how to push your local branches to remote repositories and pull changes from them to keep your local and remote repositories in sync.
+
+$ git branch -r
+  origin/ft/branch
+  origin/ft/new-feature
+  origin/main
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-feature)
+$ git fetch origin
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-feature)
+$ git branch -r
+  origin/ft/branch
+  origin/ft/new-feature
+  origin/main
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-feature)
+$ git pull origin main
+From https://github.com/kayi122/git-challenge
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+
+```
+# 5.Branch Deletion:
+``` bash
+# SOLUTION
+After merging or completing work on a feature branch, it's good practice to remove it.
+Challenge: Delete the ft/new-feature branch once you're confident the changes are integrated into main
+git checkout main
+Switched to branch 'main'
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git branch -d ft/new-feature
+warning: deleting branch 'ft/new-feature' that has been merged to
+         'refs/remotes/origin/ft/new-feature', but not yet merged to HEAD
+Deleted branch ft/new-feature (was 59c84bd).
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git push origin --delete ft/new-feature
+To https://github.com/kayi122/git-challenge.git
+ - [deleted]         ft/new-feature
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git branch -r
+  origin/ft/branch
+  origin/main
+  ```
+  # 6.Creating a Branch from a Commit:
+``` bash
+# SOLUTION
+$ git checkout -b ft/new-branch-from-commit 88bd461
+Switched to a new branch 'ft/new-branch-from-commit'
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-branch-from-commit)
+$ git branch
+  ft/branch
+* ft/new-branch-from-commit
+  main
+
+```
+# 7.Branch Merging:
+``` bash
+# SOLUTION
+ git merge ft/new-branch-from-commit
+Already up to date.
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-branch-from-commit)
+$ git branch
+  ft/branch
+* ft/new-branch-from-commit
+  main
+```
+# 8.Branch Rebasing:
+```bash
+# SOLUTION
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-branch-from-commit)
+$ git checkout ft/new-branch-from-commit
+Already on 'ft/new-branch-from-commit'
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-branch-from-commit)
+$ git rebase main
+Current branch ft/new-branch-from-commit is up to date.
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/new-branch-from-commit)
+$ git checkout main
+Switched to branch 'main'
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git merge ft/new-branch-from-commit --ff-only
+Already up to date.
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git branch -d ft/new-branch-from-commit
+Deleted branch ft/new-branch-from-commit (was 88bd461).
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (main)
+$ git branch -r
+  origin/ft/branch
+  origin/main
+```
+# 9.Renaming Branches:
+```bash
+# SOLUTION
+$ git branch -m ft/improved-branch-name
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (ft/improved-branch-name)
+$ git branch
+  ft/branch
+* ft/improved-branch-name
+
+```
+# 10.Checking Out Detached HEAD:
+```bash
+# SOKUTION
+  git checkout 38689ff
+Note: switching to '38689ff'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 38689ff adding final readme
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge ((38689ff...))
+$ git status
+HEAD detached at 38689ff
+nothing to commit, working tree clean
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge ((38689ff...))
+$ git checkout -b new-branch-name
+Switched to a new branch 'new-branch-name'
+
+USER@DESKTOP-0LNSN88 MINGW32 ~/Desktop/git-challenge (new-branch-name)
+$ git checkout main
+branch 'main' set up to track 'origin/main'.
+Switched to a new branch 'main'
+
+```
+
+
 
